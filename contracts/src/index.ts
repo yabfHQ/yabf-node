@@ -11,3 +11,13 @@ export {
     type RPCError,
     type Service
 } from './definitions'
+
+export {
+    error,
+    message,
+    messages,
+    procedure,
+    service,
+    type ErrorWithoutCode,
+    type UnnamedService
+} from './dsl'
