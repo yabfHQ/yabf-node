@@ -4,6 +4,6 @@ export interface IServiceError<TData = any> {
     status: Status
     code: string
     message: string
-    data: TData
+    details: TData
     cause?: Error | undefined
 }
