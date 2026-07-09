@@ -6,16 +6,17 @@ export class ServiceError<TData = any> extends Error {
     public readonly data: TData
 
     constructor(error: IServiceError<TData>)
-    constructor(status: Status, message: string, data: TData, cause?: Error)
-    constructor(...args: [IServiceError<TData>] | [Status, string, TData, (Error | undefined)?]) {
+    constructor(status: Status, code: string, message: string, data: TData, cause?: Error)
+    constructor(...args: [IServiceError<TData>] | [Status, string, string, TData, (Error | undefined)?]) {
         const error: IServiceError<TData> =
             args.length === 1
                 ? args[0]
                 : {
                       status: args[0],
-                      message: args[1],
-                      data: args[2],
-                      cause: args[3]
+                      code: args[1],
+                      message: args[2],
+                      data: args[3],
+                      cause: args[4]
                   }
 
         super(error.message, { cause: error.cause })
