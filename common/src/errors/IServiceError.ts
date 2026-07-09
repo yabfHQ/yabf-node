@@ -1,5 +1,7 @@
+import { Status } from '../constants'
+
 export interface IServiceError<TData = any> {
-    status: number
+    status: Status
     code: string
     message: string
     data: TData
