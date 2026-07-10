@@ -1,6 +1,6 @@
 import { FrameTagPosition } from '../FrameTagPosition'
 import { Framer } from '../Framer'
-import { IncompleteStreamError, InvalidFrameTagError } from '../errors'
+import { InvalidFrameTagError, TruncatedFrameError } from '../errors'
 import { FrameSizeExceededError } from '../errors/FrameSizeExceededError'
 import { BinaryFrame } from './BinaryFrame'
 import { BinaryFramerConfig } from './BinaryFramerConfig'
@@ -30,8 +30,6 @@ export function binaryFramer({
 
                 yield frame
             }
-
-            yield new Uint8Array([BinaryFrame.Tags.STREAM_END])
         },
 
         async *decode(input) {
@@ -44,11 +42,6 @@ export function binaryFramer({
                     if (buf.available < BinaryFrame.TAG_SIZE) break
 
                     const tag = buf.byteAt(0)
-
-                    if (tag === BinaryFrame.Tags.STREAM_END) {
-                        buf.consume(1)
-                        return
-                    }
 
                     if (tag !== BinaryFrame.Tags.START) tagError(tag, FrameTagPosition.START)
 
@@ -71,7 +64,9 @@ export function binaryFramer({
                 }
             }
 
-            throw new IncompleteStreamError()
+            if (buf.available > 0) {
+                throw new TruncatedFrameError()
+            }
         }
     }
 }
