@@ -1,43 +1,31 @@
 import { FrameTagPosition } from '../FrameTagPosition'
 import { Framer } from '../Framer'
-import { IncompleteStreamError } from '../errors'
-import { BinaryFrameTags } from './BinaryFrameTags'
+import { IncompleteStreamError, InvalidFrameTagError } from '../errors'
+import { BinaryFrame } from './BinaryFrame'
 import { growableBuffer } from './GrowableBuffer'
-import { invalidFrameTagError } from './errors/InvalidFrameTagError'
 
 export interface BinaryFramer extends Framer {}
-
-const TAG_SIZE = 1
-const PAYLOAD_LENGTH_SIZE = 4
-const HEADER_SIZE = TAG_SIZE + PAYLOAD_LENGTH_SIZE
 
 export function binaryFramer(): BinaryFramer {
     return {
         async *encode(input) {
-            function createHeader(size: number) {
-                const header = new Uint8Array(HEADER_SIZE)
-                const headerDataView = new DataView(header.buffer)
-
-                headerDataView.setUint8(0, BinaryFrameTags.START)
-                headerDataView.setUint32(TAG_SIZE, size, false)
-
-                return header
-            }
-
             for await (const chunk of input) {
                 const payloadSize = chunk.length
-                const header = createHeader(payloadSize)
 
-                const frame = new Uint8Array(HEADER_SIZE + payloadSize + TAG_SIZE)
-                frame.set(header, 0)
-                frame.set(chunk, HEADER_SIZE)
+                const frame = new Uint8Array(BinaryFrame.frameSize(payloadSize))
+                const view = new DataView(frame.buffer)
 
-                frame.set([BinaryFrameTags.END], HEADER_SIZE + payloadSize)
+                view.setUint8(BinaryFrame.Header.START_TAG_OFFSET, BinaryFrame.Tags.START)
+                view.setUint32(BinaryFrame.Header.LENGTH_OFFSET, payloadSize)
+
+                frame.set(chunk, BinaryFrame.PAYLOAD_OFFSET)
+
+                view.setUint8(BinaryFrame.tailOffset(payloadSize), BinaryFrame.Tags.END)
 
                 yield frame
             }
 
-            yield new Uint8Array([BinaryFrameTags.STREAM_END])
+            yield new Uint8Array([BinaryFrame.Tags.STREAM_END])
         },
 
         async *decode(input) {
@@ -47,31 +35,31 @@ export function binaryFramer(): BinaryFramer {
                 buf.append(chunk)
 
                 while (true) {
-                    if (buf.available < TAG_SIZE) break
+                    if (buf.available < BinaryFrame.TAG_SIZE) break
 
                     const tag = buf.byteAt(0)
 
-                    if (tag === BinaryFrameTags.STREAM_END) {
+                    if (tag === BinaryFrame.Tags.STREAM_END) {
                         buf.consume(1)
                         return
                     }
 
-                    if (tag !== BinaryFrameTags.START) {
-                        invalidFrameTagError(tag, FrameTagPosition.START)
-                    }
+                    if (tag !== BinaryFrame.Tags.START) tagError(tag, FrameTagPosition.START)
 
-                    if (buf.available < HEADER_SIZE) break
+                    if (buf.available < BinaryFrame.Header.SIZE) break
 
-                    const payloadSize = buf.view().getUint32(TAG_SIZE, false)
-                    const frameSize = HEADER_SIZE + payloadSize + TAG_SIZE
+                    const payloadSize = buf.view().getUint32(BinaryFrame.Header.LENGTH_OFFSET)
+                    const frameSize = BinaryFrame.frameSize(payloadSize)
                     if (buf.available < frameSize) break
 
-                    const payload = buf.slice(HEADER_SIZE, HEADER_SIZE + payloadSize)
-                    const endTag = buf.byteAt(HEADER_SIZE + payloadSize)
+                    const tailOffset = BinaryFrame.tailOffset(payloadSize)
+                    const endTag = buf.byteAt(tailOffset)
+                    if (endTag !== BinaryFrame.Tags.END) tagError(endTag, FrameTagPosition.END)
 
-                    if (endTag !== BinaryFrameTags.END) {
-                        invalidFrameTagError(endTag, FrameTagPosition.END)
-                    }
+                    const payload = buf.slice(
+                        BinaryFrame.PAYLOAD_OFFSET,
+                        tailOffset
+                    )
 
                     buf.consume(frameSize)
                     yield payload
@@ -81,4 +69,15 @@ export function binaryFramer(): BinaryFramer {
             throw new IncompleteStreamError()
         }
     }
+}
+
+function tagError(tag: number, position: FrameTagPosition): never {
+    function stringify(byte: number) {
+        return `BIN(${byte.toString(16).padStart(2, '0')})`
+    }
+
+    const expected =
+        position === FrameTagPosition.START ? BinaryFrame.Tags.START : BinaryFrame.Tags.END
+
+    throw new InvalidFrameTagError(stringify(expected), stringify(tag), position)
 }
