@@ -3,6 +3,7 @@ import { IServiceError } from './IServiceError'
 
 export class ServiceError<TData = any> extends Error {
     public readonly status: Status
+    public readonly code: string
     public readonly details: TData
 
     constructor(error: IServiceError<TData>)
@@ -24,6 +25,7 @@ export class ServiceError<TData = any> extends Error {
         super(error.message, { cause: error.cause })
 
         this.status = error.status
+        this.code = error.code
         this.details = error.details
     }
 }
