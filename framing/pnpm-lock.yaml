@@ -259,6 +259,10 @@ settings:
 
 importers:
     .:
+        dependencies:
+            '@yabf/common':
+                specifier: link:../common
+                version: link:../common
         devDependencies:
             '@types/node':
                 specifier: ^26.1.1
