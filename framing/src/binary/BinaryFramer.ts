@@ -16,9 +16,10 @@ export function binaryFramer({
         async *encode(input) {
             for await (const chunk of input) {
                 const payloadSize = chunk.length
-                if (payloadSize > maxFrameSize) frameSizeError(payloadSize, maxFrameSize)
+                const frameSize = BinaryFrame.frameSize(payloadSize)
+                if (frameSize > maxFrameSize) frameSizeError(payloadSize, maxFrameSize)
 
-                const frame = new Uint8Array(BinaryFrame.frameSize(payloadSize))
+                const frame = new Uint8Array(frameSize)
                 const view = new DataView(frame.buffer)
 
                 view.setUint8(BinaryFrame.Header.START_TAG_OFFSET, BinaryFrame.Tags.START)
@@ -48,9 +49,9 @@ export function binaryFramer({
                     if (buf.available < BinaryFrame.Header.SIZE) break
 
                     const payloadSize = buf.view().getUint32(BinaryFrame.Header.LENGTH_OFFSET)
-                    if (payloadSize > maxFrameSize) frameSizeError(payloadSize, maxFrameSize)
-
                     const frameSize = BinaryFrame.frameSize(payloadSize)
+                    if (frameSize > maxFrameSize) frameSizeError(payloadSize, maxFrameSize)
+
                     if (buf.available < frameSize) break
 
                     const tailOffset = BinaryFrame.tailOffset(payloadSize)
