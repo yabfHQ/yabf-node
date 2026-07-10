@@ -1,12 +1,11 @@
-import { ServiceError, Status } from '@yabf/common'
+import { FramerError } from './FramerError'
 
-export class FrameSizeExceededError extends ServiceError<{
+export class FrameSizeExceededError extends FramerError<{
     maxFrameSize: string
     frameSize: string
 }> {
     constructor(maxFrameSize: string, frameSize: string) {
         super(
-            Status.RESOURCE_EXHAUSTED,
             'FRAME_SIZE_EXCEEDED',
             `The frame size exceeds the max set limit, max: ${maxFrameSize}, size: ${frameSize}`,
             { maxFrameSize, frameSize }
