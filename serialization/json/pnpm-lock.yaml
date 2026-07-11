@@ -259,6 +259,10 @@ settings:
 
 importers:
     .:
+        dependencies:
+            '@yabf/serialization':
+                specifier: link:../serialization
+                version: link:../serialization
         devDependencies:
             '@types/node':
                 specifier: ^26.1.1

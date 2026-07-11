@@ -1,3 +1,2 @@
-export function greet(name: string = 'YABF') {
-    return `Hello, ${name}!`
-}
+export { JSONMediaTypes } from './JSONMediaTypes'
+export { json, type JSONSerializer } from './JSONSerializer'
