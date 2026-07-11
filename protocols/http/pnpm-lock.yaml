@@ -259,6 +259,10 @@ settings:
 
 importers:
     .:
+        dependencies:
+            '@yabf/protocol':
+                specifier: link:../protocol
+                version: link:../protocol
         devDependencies:
             '@types/node':
                 specifier: ^26.1.1
