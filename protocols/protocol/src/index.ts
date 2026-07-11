@@ -1,3 +1,2 @@
-export function greet(name: string = 'World') {
-    return `Hello, ${name}!`
-}
+export { type Protocol } from './Protocol'
+export { type RPCCapabilities } from './RPCCapabilities'
