@@ -42,6 +42,9 @@
         "test:ui": "vitest --ui",
         "prepublishOnly": "pnpm run format:check && pnpm run build"
     },
+    "dependencies": {
+        "@yabf/context-base": "link:../../base/context"
+    },
     "devDependencies": {
         "@types/node": "^26.1.1",
         "@vitest/ui": "4.1.10",

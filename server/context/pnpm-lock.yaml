@@ -259,6 +259,10 @@ settings:
 
 importers:
     .:
+        dependencies:
+            '@yabf/context-base':
+                specifier: link:../../base/context
+                version: link:../../base/context
         devDependencies:
             '@types/node':
                 specifier: ^26.1.1
