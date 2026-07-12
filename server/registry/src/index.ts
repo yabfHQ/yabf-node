@@ -1,3 +1,2 @@
-export function greet(name: string = 'YABF') {
-    return `Hello, ${name}!`
-}
+export { type Entry } from './Entry'
+export { registry, type Registry } from './Registry'
