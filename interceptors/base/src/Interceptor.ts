@@ -1,9 +1,12 @@
+import { CallContext } from '@yabf/context'
 import { Handler } from './Handler'
 
-export interface Interceptor {
-    (next: Handler): Handler
+export interface Interceptor<T extends CallContext> {
+    (next: Handler<T>): Handler<T>
 }
 
-export function createInterceptor(interceptor: Interceptor): Interceptor {
+export function createInterceptor<T extends CallContext>(
+    interceptor: Interceptor<T>
+): Interceptor<T> {
     return interceptor
 }
