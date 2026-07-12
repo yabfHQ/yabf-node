@@ -28,7 +28,7 @@ export interface BaseCallContext {
     readonly timeout: number | undefined
 }
 
-export function createContext(context: Omit<BaseCallContext, 'timeout'>): BaseCallContext {
+export function createBaseContext(context: Omit<BaseCallContext, 'timeout'>): BaseCallContext {
     return {
         ...context,
         get timeout() {
