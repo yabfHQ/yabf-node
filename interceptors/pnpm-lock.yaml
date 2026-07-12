@@ -259,6 +259,13 @@ settings:
 
 importers:
     .:
+        dependencies:
+            '@yabf/context':
+                specifier: link:../context
+                version: link:../context
+            '@yabf/messages':
+                specifier: link:../messages
+                version: link:../messages
         devDependencies:
             '@types/node':
                 specifier: ^26.1.1
