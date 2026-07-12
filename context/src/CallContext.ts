@@ -15,13 +15,11 @@ export interface CallContext {
     readonly request: {
         readonly streaming: boolean
         readonly metadata: Metadata
-        readonly trailers: Metadata
     }
 
     readonly response: {
         readonly streaming: boolean
         readonly metadata: Metadata
-        readonly trailers: Metadata
     }
 
     readonly signal: AbortSignal
