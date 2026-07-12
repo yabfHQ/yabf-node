@@ -3,9 +3,13 @@ import { z } from 'zod'
 export interface Entry {
     service: string
     procedure: string
-    schemas: {
-        I: z.ZodType<any>
-        O: z.ZodType<any>
+    input: {
+        streaming: boolean
+        schema: z.ZodType<any>
+    }
+    output: {
+        streaming: boolean
+        schema: z.ZodType<any>
     }
     handler: (...args: any[]) => any
 }
