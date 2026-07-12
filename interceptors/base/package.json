@@ -1,7 +1,7 @@
 {
-    "name": "@yabf/interceptors",
+    "name": "@yabf/interceptors-base",
     "version": "0.0.1",
-    "description": "YABF client & server interceptors",
+    "description": "YABF's client & server interceptors base definitions",
     "author": "Gits (https://github.com/briangits)",
     "license": "Apache-2.0",
     "keywords": [
@@ -51,7 +51,7 @@
         "vitest": "^4.1.10"
     },
     "dependencies": {
-        "@yabf/context": "link:../context",
-        "@yabf/messages": "link:../messages"
+        "@yabf/context": "link:../../context",
+        "@yabf/messages": "link:../../messages"
     }
 }
