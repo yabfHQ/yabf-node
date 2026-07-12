@@ -1,7 +1,7 @@
 {
-    "name": "@yabf/context",
+    "name": "@yabf/context-base",
     "version": "0.0.1",
-    "description": "YABF RPC context",
+    "description": "YABF's server & clients base RPC context",
     "author": "Gits (https://github.com/briangits)",
     "license": "Apache-2.0",
     "keywords": [
@@ -52,7 +52,7 @@
         "vitest": "^4.1.10"
     },
     "dependencies": {
-        "@yabf/protocol": "link:../protocols/protocol",
-        "@yabf/serialization": "link:../serialization/serialization"
+        "@yabf/protocol": "link:../../protocols/protocol",
+        "@yabf/serialization": "link:../../serialization/serialization"
     }
 }

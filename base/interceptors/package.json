@@ -51,7 +51,7 @@
         "vitest": "^4.1.10"
     },
     "dependencies": {
-        "@yabf/context": "link:../context",
+        "@yabf/context-base": "link:../context",
         "@yabf/messages": "link:../../messages"
     }
 }

@@ -3,7 +3,7 @@ import { MediaTypes, Serializer } from '@yabf/serialization'
 import { Attributes } from './attributes'
 import { Metadata } from './metadata'
 
-export interface CallContext {
+export interface BaseCallContext {
     readonly service: string
     readonly procedure: string
 
@@ -28,7 +28,7 @@ export interface CallContext {
     readonly timeout: number | undefined
 }
 
-export function createContext(context: Omit<CallContext, 'timeout'>): CallContext {
+export function createContext(context: Omit<BaseCallContext, 'timeout'>): BaseCallContext {
     return {
         ...context,
         get timeout() {

@@ -1,3 +1,3 @@
-# YABF-context
+# YABF/context-base
 
-RPC context
+Server & clients base RPC context
