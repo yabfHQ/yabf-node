@@ -1,88 +1,56 @@
-import { MetadataValue } from './MetadataValue'
+import { IMetadata } from './IMetadata'
 
-export interface Metadata {
-    get(key: string): string | undefined
-    getBinary(key: string): Uint8Array | undefined
-    getAll(key: string): MetadataValue[] | undefined
+export class Metadata implements IMetadata {
+    private readonly metadata: Map<string, string[]>
 
-    set(key: string, value: MetadataValue): void
-    append(key: string, value: MetadataValue): void
+    constructor(metadata: Iterable<[string, string[]]> = []) {
+        this.metadata = new Map(metadata)
+    }
 
-    setBinary(key: string, value: Uint8Array): void
-    appendBinary(key: string, value: Uint8Array): void
+    get(key: string): string | undefined {
+        const value = this.metadata.get(normalize(key))?.[0]
+        return typeof value === 'string' ? value : undefined
+    }
 
-    has(key: string): boolean
-    delete(key: string): boolean
+    getAll(key: string): string[] | undefined {
+        return this.metadata.get(normalize(key))
+    }
 
-    entries(): Iterable<[string, readonly MetadataValue[]]>
-    keys(): Iterable<string>
-    values(): Iterable<readonly MetadataValue[]>
+    set(key: string, value: string): void {
+        this.metadata.set(normalize(key), [value])
+    }
 
-    [Symbol.iterator](): IterableIterator<[string, readonly MetadataValue[]]>
-}
+    append(key: string, value: string): void {
+        const values = this.metadata.get(normalize(key)) ?? []
+        values.push(value)
 
-export function metadata(): Metadata {
-    const entries = new Map<string, MetadataValue[]>()
+        this.metadata.set(normalize(key), values)
+    }
 
-    const getValues = (key: string) => entries.get(normalize(key))
-    const setValues = (key: string, values: MetadataValue[]) => entries.set(normalize(key), values)
-    const deleteValues = (key: string) => entries.delete(normalize(key))
+    has(key: string): boolean {
+        return this.metadata.has(normalize(key))
+    }
 
-    return {
-        get(key) {
-            const value = getValues(key)?.[0]
-            return typeof value === 'string' ? value : undefined
-        },
-        getBinary(key) {
-            const value = getValues(key)?.[0] as Uint8Array | undefined
-            return value instanceof Uint8Array ? value : undefined
-        },
-        getAll(key) {
-            return getValues(key)
-        },
+    delete(key: string): boolean {
+        return this.metadata.delete(normalize(key))
+    }
 
-        set(key, value) {
-            setValues(key, [value])
-        },
-        append(key, value) {
-            const values = getValues(key) ?? []
-            values.push(value)
-            setValues(key, values)
-        },
+    entries(): Iterable<[string, readonly string[]]> {
+        return this.metadata.entries()
+    }
 
-        setBinary(key, value) {
-            setValues(key, [value])
-        },
-        appendBinary(key, value) {
-            const values = getValues(key) ?? []
-            values.push(value)
-            setValues(key, values)
-        },
+    keys(): Iterable<string> {
+        return this.metadata.keys()
+    }
 
-        has(key) {
-            return entries.has(normalize(key))
-        },
-        delete(key) {
-            return deleteValues(key)
-        },
+    values(): Iterable<readonly string[]> {
+        return this.metadata.values()
+    }
 
-        entries() {
-            return entries.entries()
-        },
-        keys() {
-            return entries.keys()
-        },
-        values() {
-            return entries.values()
-        },
-
-        [Symbol.iterator]() {
-            return entries[Symbol.iterator]()
-        }
+    [Symbol.iterator](): IterableIterator<[string, readonly string[]]> {
+        return this.metadata[Symbol.iterator]()
     }
 }
-
-export { metadata as createMetadata }
 
 function normalize(key: string): string {
     return key.toLowerCase()

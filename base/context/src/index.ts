@@ -6,6 +6,6 @@ export {
     type Attributes
 } from './attributes'
 
-export { createMetadata, metadata, type Metadata, type MetadataValue } from './metadata'
+export { Metadata, type IMetadata } from './metadata'
 
 export { createBaseContext, type BaseCallContext } from './BaseCallContext'
