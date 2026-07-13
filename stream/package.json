@@ -1,11 +1,12 @@
 {
-    "name": "@yabf/messages",
+    "name": "@yabf/stream",
     "version": "0.0.1",
-    "description": "RPC messages",
+    "description": "YABF's message streams",
     "author": "Gits (https://github.com/briangits)",
     "license": "Apache-2.0",
     "keywords": [
-        "template"
+        "yabf",
+        "stream"
     ],
     "homepage": "https://github.com/yabfHQ/yabf-node#readme",
     "bugs": {

@@ -1,3 +1,0 @@
-# YABF-messages
-
-RPC Messages

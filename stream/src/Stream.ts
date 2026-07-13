@@ -1,23 +1,23 @@
-import { MessagesConsumedError } from './MessagesConsumedError'
 import { NoMessageError } from './NoMessageError'
+import { StreamConsumedError } from './StreamConsumedError'
 
-export class Messages<T> implements AsyncIterable<T> {
+export class Stream<T> implements AsyncIterable<T> {
     private consumed: boolean = false
 
     private constructor(private readonly messages: AsyncIterator<T>) {}
 
     static from<T>(iterator: () => AsyncIterator<T>) {
-        return new Messages(typeof iterator === 'function' ? iterator() : iterator)
+        return new Stream(iterator())
     }
 
     [Symbol.asyncIterator](): AsyncIterator<T> {
-        if (this.consumed) throw new MessagesConsumedError()
+        if (this.consumed) throw new StreamConsumedError()
         this.consumed = true
 
         return this.messages
     }
 
-    async single(): Promise<T> {
+    async first(): Promise<T> {
         for await (const message of this) {
             return message
         }
@@ -31,10 +31,10 @@ export class Messages<T> implements AsyncIterable<T> {
         }
     }
 
-    tap(fn: (message: T) => void | Promise<void>): Messages<T> {
+    tap(fn: (message: T) => void | Promise<void>): Stream<T> {
         const self = this
 
-        return Messages.from(async function* () {
+        return Stream.from(async function* () {
             for await (const message of self) {
                 await fn(message)
                 yield message
@@ -42,20 +42,20 @@ export class Messages<T> implements AsyncIterable<T> {
         })
     }
 
-    map<R>(fn: (message: T) => R | Promise<R>): Messages<R> {
+    map<R>(fn: (message: T) => R | Promise<R>): Stream<R> {
         const self = this
 
-        return Messages.from(async function* () {
+        return Stream.from(async function* () {
             for await (const message of self) {
                 yield await fn(message)
             }
         })
     }
 
-    filter(fn: (message: T) => boolean | Promise<boolean>): Messages<T> {
+    filter(fn: (message: T) => boolean | Promise<boolean>): Stream<T> {
         const self = this
 
-        return Messages.from(async function* () {
+        return Stream.from(async function* () {
             for await (const message of self) {
                 if (await fn(message)) {
                     yield message
