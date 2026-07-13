@@ -1,6 +1,6 @@
 import { frameTags } from '../FrameTag'
 
-export const BinaryFrame = {
+export const BinaryFrames = {
     TAG_SIZE: 1,
     Tags: frameTags({ START: 0x01, END: 0x02 }),
 
@@ -9,13 +9,16 @@ export const BinaryFrame = {
         START_TAG_SIZE: 1,
         START_TAG_OFFSET: 0,
 
-        LENGTH_SIZE: 4,
-        LENGTH_OFFSET: 1,
+        TYPE_SIZE: 1,
+        TYPE_OFFSET: 1,
 
-        SIZE: 5
+        LENGTH_SIZE: 4,
+        LENGTH_OFFSET: 2,
+
+        SIZE: 6
     },
 
-    PAYLOAD_OFFSET: 5,
+    PAYLOAD_OFFSET: 6,
 
     Tail: {
         END_TAG_SIZE: 1,
@@ -25,10 +28,10 @@ export const BinaryFrame = {
     },
 
     frameSize(payloadSize: number): number {
-        return 5 + payloadSize + 1
+        return 6 + payloadSize + 1
     },
 
     tailOffset(payloadSize: number): number {
-        return 5 + payloadSize
+        return 6 + payloadSize
     }
 }

@@ -1,4 +1,6 @@
+import { Frame } from './frame'
+
 export interface Framer {
-    encode(input: AsyncIterable<Uint8Array>): AsyncIterable<Uint8Array>
-    decode(input: AsyncIterable<Uint8Array>): AsyncIterable<Uint8Array>
+    encode(frames: AsyncIterable<Frame>): AsyncIterable<Uint8Array>
+    decode(input: AsyncIterable<Uint8Array>): AsyncIterable<Frame>
 }

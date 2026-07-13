@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest'
 import {
-    BinaryFrame,
     binaryFramer,
+    BinaryFrames,
     FrameTagPosition,
     InvalidFrameTagError,
     TruncatedFrameError
@@ -13,7 +13,7 @@ function payload(bytes: number[]): Uint8Array {
 }
 
 function frameSize(payloadSize: number): number {
-    return BinaryFrame.frameSize(payloadSize)
+    return BinaryFrames.frameSize(payloadSize)
 }
 
 async function* generator<T>(items: T[]): AsyncIterable<T> {
@@ -46,16 +46,16 @@ describe('BinaryFramer', () => {
 
             const f = frames[0]!
             expect(f.length).toBe(frameSize(3))
-            expect(f[0]).toBe(BinaryFrame.Tags.START)
+            expect(f[0]).toBe(BinaryFrames.Tags.START)
 
             const view = new DataView(f.buffer)
-            expect(view.getUint32(BinaryFrame.Header.LENGTH_OFFSET)).toBe(3)
+            expect(view.getUint32(BinaryFrames.Header.LENGTH_OFFSET)).toBe(3)
 
-            expect(f[BinaryFrame.PAYLOAD_OFFSET]).toBe(0xaa)
-            expect(f[BinaryFrame.PAYLOAD_OFFSET + 1]).toBe(0xbb)
-            expect(f[BinaryFrame.PAYLOAD_OFFSET + 2]).toBe(0xcc)
+            expect(f[BinaryFrames.PAYLOAD_OFFSET]).toBe(0xaa)
+            expect(f[BinaryFrames.PAYLOAD_OFFSET + 1]).toBe(0xbb)
+            expect(f[BinaryFrames.PAYLOAD_OFFSET + 2]).toBe(0xcc)
 
-            expect(f[BinaryFrame.tailOffset(3)]).toBe(BinaryFrame.Tags.END)
+            expect(f[BinaryFrames.tailOffset(3)]).toBe(BinaryFrames.Tags.END)
         })
 
         test('payloads are encoded consistently', async () => {
@@ -77,12 +77,12 @@ describe('BinaryFramer', () => {
 
             const f = frames[0]!
             expect(f.length).toBe(frameSize(0))
-            expect(f[0]).toBe(BinaryFrame.Tags.START)
+            expect(f[0]).toBe(BinaryFrames.Tags.START)
 
             const view = new DataView(f.buffer)
-            expect(view.getUint32(BinaryFrame.Header.LENGTH_OFFSET)).toBe(0)
+            expect(view.getUint32(BinaryFrames.Header.LENGTH_OFFSET)).toBe(0)
 
-            expect(f[BinaryFrame.tailOffset(0)]).toBe(BinaryFrame.Tags.END)
+            expect(f[BinaryFrames.tailOffset(0)]).toBe(BinaryFrames.Tags.END)
         })
 
         describe('multiple payloads', () => {
@@ -101,8 +101,8 @@ describe('BinaryFramer', () => {
                 expect(sizes).toEqual([frameSize(1), frameSize(2), frameSize(3)])
 
                 for (const f of frames) {
-                    expect(f[0]).toBe(BinaryFrame.Tags.START)
-                    expect(f[f.length - 1]).toBe(BinaryFrame.Tags.END)
+                    expect(f[0]).toBe(BinaryFrames.Tags.START)
+                    expect(f[f.length - 1]).toBe(BinaryFrames.Tags.END)
                 }
             })
 
@@ -243,7 +243,7 @@ describe('BinaryFramer', () => {
 
                 const input = generator(payloads)
                 const chunks = await collect(framer.encode(input)).then(it =>
-                    chunk(it, [BinaryFrame.Header.START_TAG_SIZE + 1])
+                    chunk(it, [BinaryFrames.Header.START_TAG_SIZE + 1])
                 )
 
                 const decoded = await collect(framer.decode(generator(chunks)))
@@ -257,7 +257,7 @@ describe('BinaryFramer', () => {
 
                 const input = generator(payloads)
                 const chunks = await collect(framer.encode(input)).then(it =>
-                    chunk(it, [BinaryFrame.Header.START_TAG_SIZE + 4])
+                    chunk(it, [BinaryFrames.Header.START_TAG_SIZE + 4])
                 )
 
                 const decoded = await collect(framer.decode(generator(chunks)))
@@ -350,7 +350,7 @@ describe('BinaryFramer', () => {
 
                 const frame = frames[0]
                 // set invalid start tag
-                frame[BinaryFrame.Header.START_TAG_OFFSET] = 0xff
+                frame[BinaryFrames.Header.START_TAG_OFFSET] = 0xff
 
                 const badFrames = generator([frame])
 
