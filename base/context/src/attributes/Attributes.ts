@@ -1,58 +1,45 @@
 import { AttributeKey } from './AttributeKey'
 import { AttributeValue } from './AttributeValue'
+import { IAttributes } from './IAttributes'
 
-export interface Attributes {
-    get<T, K extends AttributeKey<T>>(key: K): AttributeValue<T, K>
-    set<T>(key: AttributeKey<T>, value: T): void
+export class Attributes implements IAttributes {
+    private readonly attributes = new Map<AttributeKey<any>, any>()
 
-    has(key: AttributeKey<unknown>): boolean
-    delete<T>(key: AttributeKey<T>): boolean
+    get<T, K extends AttributeKey<T>>(key: K): AttributeValue<T, K> {
+        return this.attributes.has(key)
+            ? this.attributes.get(key)
+            : (key.defaultValue as AttributeValue<T, K>)
+    }
 
-    readonly size: number
+    set<T>(key: AttributeKey<T>, value: T) {
+        this.attributes.set(key, value)
+    }
 
-    entries(): Iterable<[AttributeKey<unknown>, unknown]>
-    keys(): Iterable<AttributeKey<unknown>>
-    values(): Iterable<unknown>
+    has(key: AttributeKey<unknown>) {
+        return this.attributes.has(key)
+    }
 
-    [Symbol.iterator](): IterableIterator<[AttributeKey<unknown>, unknown]>
-}
+    delete(key: AttributeKey<unknown>) {
+        return this.attributes.delete(key)
+    }
 
-export function attributes(): Attributes {
-    const entries = new Map<AttributeKey<any>, any>()
+    get size() {
+        return this.attributes.size
+    }
 
-    return {
-        get(key) {
-            return entries.has(key) ? entries.get(key) : key.defaultValue
-        },
-        set(key, value) {
-            entries.set(key, value)
-        },
+    entries(): Iterable<[AttributeKey<unknown>, unknown]> {
+        return this.attributes.entries()
+    }
 
-        has(key) {
-            return entries.has(key)
-        },
-        delete(key) {
-            return entries.delete(key)
-        },
+    keys(): Iterable<AttributeKey<unknown>> {
+        return this.attributes.keys()
+    }
 
-        get size() {
-            return entries.size
-        },
+    values(): Iterable<unknown> {
+        return this.attributes.values()
+    }
 
-        entries() {
-            return entries.entries()
-        },
-        keys() {
-            return entries.keys()
-        },
-        values() {
-            return entries.values()
-        },
-
-        [Symbol.iterator]() {
-            return entries[Symbol.iterator]()
-        }
+    [Symbol.iterator](): IterableIterator<[AttributeKey<unknown>, unknown]> {
+        return this.attributes[Symbol.iterator]()
     }
 }
-
-export { attributes as createAttributes }

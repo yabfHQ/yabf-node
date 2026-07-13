@@ -1,10 +1,4 @@
-export {
-    attributes,
-    createAttributes,
-    type AttributeKey,
-    type AttributeValue,
-    type Attributes
-} from './attributes'
+export { Attributes, type AttributeKey, type AttributeValue, type IAttributes } from './attributes'
 
 export { Metadata, type IMetadata } from './metadata'
 
