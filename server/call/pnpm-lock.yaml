@@ -259,6 +259,10 @@ settings:
 
 importers:
     .:
+        dependencies:
+            '@yabf/call':
+                specifier: link:../../base/call
+                version: link:../../base/call
         devDependencies:
             '@types/node':
                 specifier: ^26.1.1
