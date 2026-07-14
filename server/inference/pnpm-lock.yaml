@@ -259,6 +259,13 @@ settings:
 
 importers:
     .:
+        dependencies:
+            '@yabf/contracts':
+                specifier: link:../../contracts
+                version: link:../../contracts
+            '@yabf/server-call':
+                specifier: link:../call
+                version: link:../call
         devDependencies:
             '@types/node':
                 specifier: ^26.1.1

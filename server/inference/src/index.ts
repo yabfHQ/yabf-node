@@ -1,3 +1,2 @@
-export function greet(name: string = 'YABF') {
-    return `Hello, ${name}!`
-}
+export { type ProcedureImpl, type ProcedureInput, type ProcedureOutput } from './procedure'
+export { type ServiceImpl } from './service'
