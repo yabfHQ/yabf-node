@@ -1,15 +1,6 @@
 import { describe, expect, test } from 'vitest'
 import { StreamClosedError, StreamWriter } from '../src'
-
-async function collect<T>(stream: AsyncIterable<T>): Promise<T[]> {
-    const messages: T[] = []
-
-    for await (const message of stream) {
-        messages.push(message)
-    }
-
-    return messages
-}
+import { collect } from './util'
 
 describe('StreamWriter', () => {
     test('writing messages', async () => {
