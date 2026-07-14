@@ -6,6 +6,7 @@ export { Metadata, type IMetadata } from './metadata'
 
 export {
     Attributes,
+    createContext,
     type AttributeKey,
     type AttributeValue,
     type CallContext,
