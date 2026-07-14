@@ -9,16 +9,13 @@ export const BinaryFrames = {
         START_TAG_SIZE: 1,
         START_TAG_OFFSET: 0,
 
-        TYPE_SIZE: 1,
-        TYPE_OFFSET: 1,
-
         LENGTH_SIZE: 4,
-        LENGTH_OFFSET: 2,
+        LENGTH_OFFSET: 1,
 
-        SIZE: 6
+        SIZE: 5
     },
 
-    PAYLOAD_OFFSET: 6,
+    PAYLOAD_OFFSET: 5,
 
     Tail: {
         END_TAG_SIZE: 1,
@@ -28,10 +25,10 @@ export const BinaryFrames = {
     },
 
     frameSize(payloadSize: number): number {
-        return 6 + payloadSize + 1
+        return 5 + payloadSize + 1
     },
 
     tailOffset(payloadSize: number): number {
-        return 6 + payloadSize
+        return 5 + payloadSize
     }
 }

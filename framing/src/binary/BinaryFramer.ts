@@ -13,24 +13,23 @@ export function binaryFramer({
     maxFrameSize = 16 * 1024 * 1024
 }: Partial<BinaryFramerConfig> = {}): BinaryFramer {
     return {
-        async *encode(frames) {
-            for await (const frame of frames) {
-                const payloadSize = frame.payload?.length ?? 0
+        async *encode(messages) {
+            for await (const payload of messages) {
+                const payloadSize = payload.length ?? 0
                 const frameSize = BinaryFrames.frameSize(payloadSize)
                 if (frameSize > maxFrameSize) frameSizeError(frameSize, maxFrameSize)
 
-                const encoded = new Uint8Array(frameSize)
-                const view = new DataView(encoded.buffer)
+                const frame = new Uint8Array(frameSize)
+                const view = new DataView(frame.buffer)
 
                 view.setUint8(BinaryFrames.Header.START_TAG_OFFSET, BinaryFrames.Tags.START)
-                view.setUint8(BinaryFrames.Header.TYPE_OFFSET, frame.type)
                 view.setUint32(BinaryFrames.Header.LENGTH_OFFSET, payloadSize)
 
-                if (frame.payload) encoded.set(frame.payload, BinaryFrames.PAYLOAD_OFFSET)
+                frame.set(payload, BinaryFrames.PAYLOAD_OFFSET)
 
                 view.setUint8(BinaryFrames.tailOffset(payloadSize), BinaryFrames.Tags.END)
 
-                yield encoded
+                yield frame
             }
         },
 
@@ -49,8 +48,6 @@ export function binaryFramer({
 
                     if (buf.available < BinaryFrames.Header.SIZE) break
 
-                    // TODO: Validate type is a valid FrameType
-                    const type = buf.byteAt(BinaryFrames.Header.TYPE_OFFSET)
                     const payloadSize = buf.view().getUint32(BinaryFrames.Header.LENGTH_OFFSET)
                     const frameSize = BinaryFrames.frameSize(payloadSize)
                     if (frameSize > maxFrameSize) frameSizeError(frameSize, maxFrameSize)
@@ -64,7 +61,7 @@ export function binaryFramer({
                     const payload = buf.slice(BinaryFrames.PAYLOAD_OFFSET, tailOffset)
 
                     buf.consume(frameSize)
-                    yield { type, payload }
+                    yield payload
                 }
             }
 

@@ -1,5 +1,3 @@
-export { Frame, FrameType, frame } from './frame'
-
 export * from './Framer'
 export * from './FrameTag'
 export * from './FrameTagPosition'
