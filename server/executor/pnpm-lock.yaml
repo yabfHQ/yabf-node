@@ -259,6 +259,13 @@ settings:
 
 importers:
     .:
+        dependencies:
+            '@yabf/interceptors':
+                specifier: link:../interceptors
+                version: link:../interceptors
+            '@yabf/server-call':
+                specifier: link:../call
+                version: link:../call
         devDependencies:
             '@types/node':
                 specifier: ^26.1.1
