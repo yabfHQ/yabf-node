@@ -1,9 +1,9 @@
 export {
+    Cardinality,
     type AnyError,
     type AnyMessage,
     type AnyProcedure,
     type AnyService,
-    type Cardinality,
     type Errors,
     type Message,
     type Procedure,
