@@ -260,12 +260,12 @@ settings:
 importers:
     .:
         dependencies:
-            '@yabf/context-base':
-                specifier: link:../context
-                version: link:../context
-            '@yabf/messages':
-                specifier: link:../../messages
-                version: link:../../messages
+            '@yabf/call':
+                specifier: link:../call
+                version: link:../call
+            '@yabf/stream':
+                specifier: link:../../stream
+                version: link:../../stream
         devDependencies:
             '@types/node':
                 specifier: ^26.1.1

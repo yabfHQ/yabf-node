@@ -1,6 +1,11 @@
-import { CallContext } from '@yabf/context'
-import { createInterceptorBase, Interceptor } from '@yabf/interceptors-base'
+import {
+    Interceptor as BaseInterceptor,
+    createInterceptor as createBaseInterceptor
+} from '@yabf/interceptors-base'
+import { CallContext } from '@yabf/server-call'
 
-export function createInterceptor(interceptor: Interceptor<CallContext>): Interceptor<CallContext> {
-    return createInterceptorBase(interceptor)
+export interface Interceptor extends BaseInterceptor<CallContext> {}
+
+export function createInterceptor(interceptor: Interceptor): Interceptor {
+    return createBaseInterceptor(interceptor)
 }

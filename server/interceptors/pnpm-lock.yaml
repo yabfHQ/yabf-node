@@ -260,12 +260,12 @@ settings:
 importers:
     .:
         dependencies:
-            '@yabf/context':
-                specifier: link:../context
-                version: link:../context
             '@yabf/interceptors-base':
                 specifier: link:../../base/interceptors
                 version: link:../../base/interceptors
+            '@yabf/server-call':
+                specifier: link:../call
+                version: link:../call
         devDependencies:
             '@types/node':
                 specifier: ^26.1.1

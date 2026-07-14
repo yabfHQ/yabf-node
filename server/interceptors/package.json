@@ -43,8 +43,8 @@
         "prepublishOnly": "pnpm run format:check && pnpm run build"
     },
     "dependencies": {
-        "@yabf/context": "link:../context",
-        "@yabf/interceptors-base": "link:../../base/interceptors"
+        "@yabf/interceptors-base": "link:../../base/interceptors",
+        "@yabf/server-call": "link:../call"
     },
     "devDependencies": {
         "@types/node": "^26.1.1",

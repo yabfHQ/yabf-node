@@ -1,3 +1,3 @@
 export * from '@yabf/interceptors-base'
 
-export { createInterceptor } from './Interceptor'
+export { createInterceptor, type Interceptor } from './Interceptor'

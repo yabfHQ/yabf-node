@@ -1,2 +1,1 @@
-export { type Handler } from './Handler'
-export { createInterceptorBase, type Interceptor } from './Interceptor'
+export { createInterceptor, type Interceptor } from './Interceptor'
