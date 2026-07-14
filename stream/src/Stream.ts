@@ -6,7 +6,7 @@ export class Stream<T> implements AsyncIterable<T> {
     private consumed: boolean = false
     private taps: ((message: T) => void | Promise<void>)[] = []
 
-    private constructor(private readonly messages: AsyncIterable<T>) {}
+    constructor(private readonly messages: AsyncIterable<T>) {}
 
     static from<T>(iterator: () => AsyncIterator<T>) {
         return new Stream({
