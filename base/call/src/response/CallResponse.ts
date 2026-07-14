@@ -1,11 +1,15 @@
-import { Message } from '@yabf/messages'
 import { Stream } from '@yabf/stream'
+import { Metadata } from '../context'
 
 export interface CallResponse {
     readonly mediaType: string
-    readonly messages: Stream<Message>
+
+    readonly metadata: Metadata
+    readonly trailers: Metadata | Promise<Metadata>
+
+    readonly messages: Stream<any>
 }
 
-export function response(mediaType: string, messages: Stream<Message>): CallResponse {
-    return { mediaType, messages }
+export function response(response: CallResponse): CallResponse {
+    return response
 }

@@ -1,6 +1,6 @@
-import { Message } from '@yabf/messages'
 import { Protocol, RPCCapabilities } from '@yabf/protocol'
 import { Stream } from '@yabf/stream'
+import { Metadata } from '../context'
 
 export interface Call {
     readonly service: string
@@ -11,13 +11,23 @@ export interface Call {
 
     readonly signal: AbortSignal
 
-    readonly messages: Stream<Message>
+    readonly metadata: Metadata
+    readonly trailers: Metadata | Promise<Metadata>
+
+    readonly messages: Stream<any>
 }
 
 export function call(
     service: string,
     procedure: string,
-    { protocol, mediaType, signal, messages }: Omit<Call, 'service' | 'procedure'>
+    {
+        protocol,
+        mediaType,
+        signal,
+        metadata,
+        trailers,
+        messages
+    }: Omit<Call, 'service' | 'procedure'>
 ): Call {
     return {
         service,
@@ -25,6 +35,8 @@ export function call(
         protocol,
         mediaType,
         signal,
+        metadata,
+        trailers,
         messages
     }
 }
