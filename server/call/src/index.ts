@@ -1,4 +1,4 @@
 export * from '@yabf/call'
 
-export { type Call } from './Call'
-export { type CallContext } from './CallContext'
+export { createCall, type Call } from './Call'
+export { createContext, type CallContext } from './CallContext'
