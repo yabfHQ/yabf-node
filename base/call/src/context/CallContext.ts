@@ -2,9 +2,9 @@ import { Call } from '../call'
 import { CallResponse } from '../response'
 import { Attributes } from './attributes'
 
-export interface CallContext {
-    readonly call: Call
-    readonly response: CallResponse
+export interface CallContext<TCall extends Call, TResponse extends CallResponse> {
+    readonly call: TCall
+    readonly response: TResponse
 
     readonly attributes: Attributes
 
