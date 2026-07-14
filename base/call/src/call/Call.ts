@@ -1,6 +1,6 @@
 import { Protocol, RPCCapabilities } from '@yabf/protocol'
 import { Stream } from '@yabf/stream'
-import { Metadata } from '../context'
+import { Metadata } from '../metadata'
 
 export interface Call {
     readonly service: string
