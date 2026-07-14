@@ -259,6 +259,19 @@ settings:
 
 importers:
     .:
+        dependencies:
+            '@yabf/contracts':
+                specifier: link:../../contracts
+                version: link:../../contracts
+            '@yabf/inference':
+                specifier: link:../inference
+                version: link:../inference
+            '@yabf/server-call':
+                specifier: link:../call
+                version: link:../call
+            '@yabf/stream':
+                specifier: link:../../stream
+                version: link:../../stream
         devDependencies:
             '@types/node':
                 specifier: ^26.1.1
