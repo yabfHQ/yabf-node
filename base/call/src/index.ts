@@ -1,6 +1,6 @@
-export { call, type Call } from './call'
+export { createCall, type Call } from './call'
 
-export { response, type CallResponse } from './response'
+export { createResponse, type CallResponse } from './response'
 
 export { Metadata, type IMetadata } from './metadata'
 

@@ -17,7 +17,7 @@ export interface Call {
     readonly messages: Stream<any>
 }
 
-export function call(
+export function createCall(
     service: string,
     procedure: string,
     {

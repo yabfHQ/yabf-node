@@ -10,6 +10,6 @@ export interface CallResponse {
     readonly messages: Stream<any>
 }
 
-export function response(response: CallResponse): CallResponse {
+export function createResponse(response: CallResponse): CallResponse {
     return response
 }
