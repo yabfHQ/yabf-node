@@ -41,6 +41,17 @@
         "test:ui": "vitest --ui",
         "prepublishOnly": "pnpm run format:check && pnpm run build"
     },
+    "dependencies": {
+        "@yabf/common": "link:../../common",
+        "@yabf/executor": "link:../executor",
+        "@yabf/framing": "link:../../framing",
+        "@yabf/messages": "link:../../messages",
+        "@yabf/protocol": "link:../../protocols/protocol",
+        "@yabf/registry": "link:../registry",
+        "@yabf/serialization": "link:../../serialization/serialization",
+        "@yabf/server-call": "link:../call",
+        "@yabf/stream": "link:../../stream"
+    },
     "devDependencies": {
         "@types/node": "^26.1.1",
         "@vitest/ui": "4.1.10",

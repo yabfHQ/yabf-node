@@ -259,6 +259,34 @@ settings:
 
 importers:
     .:
+        dependencies:
+            '@yabf/common':
+                specifier: link:../../common
+                version: link:../../common
+            '@yabf/executor':
+                specifier: link:../executor
+                version: link:../executor
+            '@yabf/framing':
+                specifier: link:../../framing
+                version: link:../../framing
+            '@yabf/messages':
+                specifier: link:../../messages
+                version: link:../../messages
+            '@yabf/protocol':
+                specifier: link:../../protocols/protocol
+                version: link:../../protocols/protocol
+            '@yabf/registry':
+                specifier: link:../registry
+                version: link:../registry
+            '@yabf/serialization':
+                specifier: link:../../serialization/serialization
+                version: link:../../serialization/serialization
+            '@yabf/server-call':
+                specifier: link:../call
+                version: link:../call
+            '@yabf/stream':
+                specifier: link:../../stream
+                version: link:../../stream
         devDependencies:
             '@types/node':
                 specifier: ^26.1.1
