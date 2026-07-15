@@ -1,1 +1,1 @@
-export { executor, type Executor } from './Executor'
+export { creatExecutor, type Executor } from './Executor'

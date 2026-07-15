@@ -10,7 +10,7 @@ export interface Dispatcher {
     dispatch(call: Call): Promise<CallResponse>
 }
 
-export function dispatcher(
+export function createDispatcher(
     routes: Registry,
     executor: Executor,
     serializers: Serializer<string, MediaTypes>[]

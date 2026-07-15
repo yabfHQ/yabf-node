@@ -1,1 +1,1 @@
-export { dispatcher, type Dispatcher } from './Dispatcher'
+export { createDispatcher, type Dispatcher } from './Dispatcher'

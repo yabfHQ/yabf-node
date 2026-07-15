@@ -10,7 +10,7 @@ export interface Registry {
     entries(): Iterable<[string, Entry]>
 }
 
-export function registry(): Registry {
+export function createRegistry(): Registry {
     const entries = new Map<string, Entry>()
 
     const lookupKey = (service: string, procedure: string) => `${service}.${procedure}`

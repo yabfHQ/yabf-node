@@ -6,7 +6,7 @@ export interface Executor {
     execute(context: CallContext, fn: () => Promise<void>): Promise<void>
 }
 
-export function executor(): Executor {
+export function creatExecutor(): Executor {
     const interceptors: Interceptor[] = []
 
     return {
