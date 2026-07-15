@@ -16,12 +16,16 @@ export function createHandler(procedure: AnyProcedure, impl: ProcedureImpl<AnyPr
 
         const output = impl(context, input)
 
-        if (procedure.output.cardinality === Cardinality.ONE) {
-            writer.yield(await output)
-        } else {
-            for await (const it of output as AsyncIterable<unknown>) {
-                writer.yield(it)
+        try {
+            if (procedure.output.cardinality === Cardinality.ONE) {
+                writer.yield(await output)
+            } else {
+                for await (const it of output as AsyncIterable<unknown>) {
+                    writer.yield(it)
+                }
             }
+        } finally {
+            writer.close()
         }
     }
 }
