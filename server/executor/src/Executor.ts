@@ -26,7 +26,7 @@ export function executor(): Executor {
                 await interceptor(context, () => chain(index + 1))
             }
 
-            chain(0)
+            await chain(0)
         }
     }
 }
