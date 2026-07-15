@@ -1,3 +1,3 @@
-export function greet(name: string = 'YABF') {
-    return `Hello, ${name}!`
-}
+export * from '@yabf/inference'
+
+export { type App, createApp } from './App'

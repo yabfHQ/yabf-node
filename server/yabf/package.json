@@ -48,5 +48,14 @@
         "prettier-plugin-organize-imports": "^4.3.0",
         "tsdown": "^0.22.4",
         "vitest": "^4.1.10"
+    },
+    "dependencies": {
+        "@yabf/contracts": "link:../../contracts",
+        "@yabf/dispatcher": "link:../dispatcher",
+        "@yabf/executor": "link:../executor",
+        "@yabf/inference": "link:../inference",
+        "@yabf/interceptors": "link:../interceptors",
+        "@yabf/registry": "link:../registry",
+        "@yabf/serialization": "link:../../serialization/serialization"
     }
 }

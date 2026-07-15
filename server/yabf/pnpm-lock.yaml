@@ -259,6 +259,28 @@ settings:
 
 importers:
     .:
+        dependencies:
+            '@yabf/contracts':
+                specifier: link:../../contracts
+                version: link:../../contracts
+            '@yabf/dispatcher':
+                specifier: link:../dispatcher
+                version: link:../dispatcher
+            '@yabf/executor':
+                specifier: link:../executor
+                version: link:../executor
+            '@yabf/inference':
+                specifier: link:../inference
+                version: link:../inference
+            '@yabf/interceptors':
+                specifier: link:../interceptors
+                version: link:../interceptors
+            '@yabf/registry':
+                specifier: link:../registry
+                version: link:../registry
+            '@yabf/serialization':
+                specifier: link:../../serialization/serialization
+                version: link:../../serialization/serialization
         devDependencies:
             '@types/node':
                 specifier: ^26.1.1
