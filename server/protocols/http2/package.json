@@ -1,0 +1,54 @@
+{
+    "name": "@yabf/http2-server",
+    "version": "0.0.1",
+    "description": "Node.js library template",
+    "author": "Gits (https://github.com/briangits)",
+    "license": "Apache-2.0",
+    "keywords": [
+        "yabf",
+        "protocol",
+        "http2"
+    ],
+    "homepage": "https://github.com/yabfHQ/yabf-node#readme",
+    "bugs": {
+        "url": "https://github.com/yabfHQ/yabf-node/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/yabfHQ/yabf-node.git"
+    },
+    "type": "module",
+    "types": "./dist/index.d.mts",
+    "exports": {
+        ".": {
+            "import": {
+                "types": "./dist/index.d.mts",
+                "default": "./dist/index.mjs"
+            },
+            "require": {
+                "types": "./dist/index.d.mts",
+                "default": "./dist/index.cjs"
+            }
+        }
+    },
+    "files": [
+        "dist"
+    ],
+    "sideEffects": false,
+    "scripts": {
+        "format": "prettier --config prettier.config.ts --ignore-path .gitignore --ignore-unknown --write '**/*'",
+        "format:check": "prettier --config prettier.config.ts --ignore-path .gitignore --ignore-unknown --check '**/*'",
+        "build": "tsdown -c tsdown.config.ts",
+        "test": "vitest",
+        "test:ui": "vitest --ui",
+        "prepublishOnly": "pnpm run format:check && pnpm run build"
+    },
+    "devDependencies": {
+        "@types/node": "^26.1.1",
+        "@vitest/ui": "4.1.10",
+        "prettier": "^3.9.4",
+        "prettier-plugin-organize-imports": "^4.3.0",
+        "tsdown": "^0.22.4",
+        "vitest": "^4.1.10"
+    }
+}
