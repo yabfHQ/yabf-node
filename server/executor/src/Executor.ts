@@ -23,7 +23,13 @@ export function creatExecutor(): Executor {
 
                 const interceptor = interceptors[index]!
 
-                await interceptor(context, () => chain(index + 1))
+                let downStream: Promise<void> | undefined
+                await interceptor(context, () => {
+                    downStream ??= chain(index + 1)
+                    return  downStream
+                })
+
+                await downStream
             }
 
             await chain(0)
