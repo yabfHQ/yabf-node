@@ -5,7 +5,8 @@
     "author": "Gits (https://github.com/briangits)",
     "license": "Apache-2.0",
     "keywords": [
-        "template"
+        "yabf",
+        "dispatcher"
     ],
     "homepage": "https://github.com/yabfHQ/yabf-node#readme",
     "bugs": {
@@ -44,9 +45,6 @@
     "dependencies": {
         "@yabf/common": "link:../../common",
         "@yabf/executor": "link:../executor",
-        "@yabf/framing": "link:../../framing",
-        "@yabf/messages": "link:../../messages",
-        "@yabf/protocol": "link:../../protocols/protocol",
         "@yabf/registry": "link:../registry",
         "@yabf/serialization": "link:../../serialization/serialization",
         "@yabf/server-call": "link:../call",

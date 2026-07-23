@@ -266,15 +266,6 @@ importers:
             '@yabf/executor':
                 specifier: link:../executor
                 version: link:../executor
-            '@yabf/framing':
-                specifier: link:../../framing
-                version: link:../../framing
-            '@yabf/messages':
-                specifier: link:../../messages
-                version: link:../../messages
-            '@yabf/protocol':
-                specifier: link:../../protocols/protocol
-                version: link:../../protocols/protocol
             '@yabf/registry':
                 specifier: link:../registry
                 version: link:../registry
