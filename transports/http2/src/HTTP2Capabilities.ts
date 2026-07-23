@@ -1,4 +1,4 @@
-import { RPCCapabilities } from '@yabf/protocol'
+import { RPCCapabilities } from '@yabf/transport'
 
 export const HTTP2Capabilities: RPCCapabilities = {
     unary: true,

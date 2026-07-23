@@ -1,8 +1,8 @@
-import { protocol, Protocol } from '@yabf/protocol'
+import { Transport, transport } from '@yabf/transport'
 import { HTTPCapabilities } from './HTTPCapabilities'
 import { HTTPOptions } from './HTTPOptions'
 
-export interface HTTPProtocol extends Protocol<'http', HTTPCapabilities> {
+export interface HTTPProtocol extends Transport<'http', HTTPCapabilities> {
     options: HTTPOptions
 }
 
@@ -11,6 +11,6 @@ export function http({ pathPrefix = '/' }: HTTPOptions): HTTPProtocol {
         options: {
             pathPrefix
         },
-        ...protocol('http', HTTPCapabilities)
+        ...transport('http', HTTPCapabilities)
     } as const
 }

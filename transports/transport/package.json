@@ -1,12 +1,12 @@
 {
-    "name": "@yabf/protocol",
+    "name": "@yabf/transport",
     "version": "0.0.1",
-    "description": "Protocols supported by YABF",
+    "description": "Transports used by YABF",
     "author": "Gits (https://github.com/briangits)",
     "license": "Apache-2.0",
     "keywords": [
         "yabf",
-        "protocol"
+        "transport"
     ],
     "homepage": "https://github.com/yabfHQ/yabf-node#readme",
     "bugs": {

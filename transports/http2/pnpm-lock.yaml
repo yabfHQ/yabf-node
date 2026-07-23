@@ -260,18 +260,9 @@ settings:
 importers:
     .:
         dependencies:
-            '@yabf/messages':
-                specifier: link:../../messages
-                version: link:../../messages
-            '@yabf/serialization':
-                specifier: link:../../serialization/serialization
-                version: link:../../serialization/serialization
-            '@yabf/stream':
-                specifier: link:../../stream
-                version: link:../../stream
             '@yabf/transport':
-                specifier: link:../../transports/transport
-                version: link:../../transports/transport
+                specifier: link:../transport
+                version: link:../transport
         devDependencies:
             '@types/node':
                 specifier: ^26.1.1

@@ -51,7 +51,7 @@
     },
     "dependencies": {
         "@yabf/messages": "link:../../messages",
-        "@yabf/protocol": "link:../../protocols/protocol",
+        "@yabf/transport": "link:../../transports/transport",
         "@yabf/serialization": "link:../../serialization/serialization",
         "@yabf/stream": "link:../../stream"
     }

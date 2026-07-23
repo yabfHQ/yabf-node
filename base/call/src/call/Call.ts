@@ -1,12 +1,12 @@
-import { Protocol, RPCCapabilities } from '@yabf/protocol'
 import { Stream } from '@yabf/stream'
+import { RPCCapabilities, Transport } from '@yabf/transport'
 import { Metadata } from '../metadata'
 
 export interface Call {
     readonly service: string
     readonly procedure: string
 
-    readonly protocol: Protocol<string, RPCCapabilities>
+    readonly transport: Transport<string, RPCCapabilities>
     readonly mediaType: string
 
     readonly signal: AbortSignal
@@ -21,7 +21,7 @@ export function createCall(
     service: string,
     procedure: string,
     {
-        protocol,
+        transport,
         mediaType,
         signal,
         metadata,
@@ -32,7 +32,7 @@ export function createCall(
     return {
         service,
         procedure,
-        protocol,
+        transport,
         mediaType,
         signal,
         metadata,

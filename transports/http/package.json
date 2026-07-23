@@ -1,12 +1,12 @@
 {
     "name": "@yabf/http",
     "version": "0.0.1",
-    "description": "HTTP protocol",
+    "description": "HTTP transport",
     "author": "Gits (https://github.com/briangits)",
     "license": "Apache-2.0",
     "keywords": [
         "yabf",
-        "protocol",
+        "transport",
         "http"
     ],
     "homepage": "https://github.com/yabfHQ/yabf-node#readme",
@@ -43,6 +43,9 @@
         "test:ui": "vitest --ui",
         "prepublishOnly": "pnpm run format:check && pnpm run build"
     },
+    "dependencies": {
+        "@yabf/transport": "link:../transport"
+    },
     "devDependencies": {
         "@types/node": "^26.1.1",
         "@vitest/ui": "4.1.10",
@@ -50,8 +53,5 @@
         "prettier-plugin-organize-imports": "^4.3.0",
         "tsdown": "^0.22.4",
         "vitest": "^4.1.10"
-    },
-    "dependencies": {
-        "@yabf/protocol": "link:../protocol"
     }
 }
